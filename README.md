@@ -4,7 +4,7 @@
 
 If you are a passionate music collector that has been collecting for a long time, you may have trouble remembering which albums you have in your collection. This applications aims to solve that problem!
 
-## Main users
+## Main Users
 
 The main users are people collecting music as a hobby or just anyone that would like to organize and have an easy overview of their albums. The application will have a simple UI that anyone will be able to use.
 
@@ -17,7 +17,7 @@ The main users are people collecting music as a hobby or just anyone that would 
 - Search for a specific album
 - Filter search results
 
-## Logical model
+## Logical Model
 
 ![Logical model](/diagrams/logical-model.png)
 
@@ -27,19 +27,40 @@ The reason for not including the producer and track attribues in the entity set 
 
 The relationship between **Albums** and **Tracks** is _many-many_ since an album can include any numner of tracks and a specific track can be present on multiple albums. Between **Albums** and **Producers** the relation is also _many-many_ since a producer can produce many albums and a album can have multiple producers.
 
-## SQL design
+## SQL Design
 
 Albums(label, device, genre, albumTtitle, band, year)
-<br>
+
 Tracks(name, length, albumTitle, band)
-<br>
+
 Producers(name, albumTitle, band)
 
 I did not convert the relations to tables since this would cause redundancy. This is because they are a part of the weak entity sets **Producers** and **Tracks**. I did rename some of the attributes just to make it a bit clearer when combining attributes from different entities.
 
-## SQL queries
+## SQL Queries
+
+**Search for an album by title or band**
+
+```sql
+SELECT albumTitle FROM Albums WHERE albumTitle LIKE 'query%' OR band LIKE 'query%'
+```
+
+**Sort albums by length**
+
+```sql
+SELECT albumTitle FROM Tracks GROUP BY albumTitle ORDER BY SUM(length)
+```
 
 **Get the length of an album**
 
+```sql
 SELECT SUM(length) FROM Tracks WHERE band = 'x' AND title = 'y'
+```
 
+**Filter albums by producer and label**
+
+```sql
+SELECT albumTitle FROM Albums WHERE label = 'x' INNER JOIN Producers ON Producers.albumTitle = Albums.albumTitle
+```
+
+**Get all information about a specific album**
