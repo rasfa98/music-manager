@@ -45,11 +45,15 @@ I did not convert the relations to tables since this would cause redundancy. Thi
 SELECT albumTitle FROM Albums WHERE albumTitle LIKE 'query%' OR band LIKE 'query%'
 ```
 
+The query will return rows where part of the the album title or band matches.
+
 **Sort albums by length**
 
 ```sql
-SELECT albumTitle FROM Tracks GROUP BY albumTitle ORDER BY SUM(length)
+SELECT albumTitle, length FROM Tracks GROUP BY albumTitle ORDER BY SUM(length)
 ```
+
+Will be used when we want to list the albums by length. This query uses two tables and the values are grouped by title. Album title and length will be selected since that's the values that will be displayed in the application. 
 
 **Get the length of an album**
 
@@ -57,14 +61,20 @@ SELECT albumTitle FROM Tracks GROUP BY albumTitle ORDER BY SUM(length)
 SELECT SUM(length) FROM Tracks WHERE band = 'x' AND title = 'y'
 ```
 
+Used when displaying an individual albums length.
+
 **Filter albums by producer and label**
 
 ```sql
 SELECT albumTitle FROM Albums WHERE label = 'x' INNER JOIN Producers ON Producers.albumTitle = Albums.albumTitle
 ```
 
+This query will be used as a part of the filter function when searching for albums.
+
 **Get all information about a specific album**
 
 ```sql
 SELECT * FROM Albums WHERE band = 'x' AND albumTitle = 'y' INNER JOIN Tracks ON Tracks.albumTitle = Albums.albumTitle AND Tracks.band = Albums.band INNER JOIN Producers ON Producers.albumTitle = Albums.albumTitle AND Producers.band = Albums.band
 ```
+
+This query will be used in conjunction with the query that returns the length of an album when displaying an album in detail.
