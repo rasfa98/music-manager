@@ -64,3 +64,7 @@ SELECT albumTitle FROM Albums WHERE label = 'x' INNER JOIN Producers ON Producer
 ```
 
 **Get all information about a specific album**
+
+```sql
+SELECT * FROM Albums WHERE band = 'x' AND albumTitle = 'y' INNER JOIN Tracks ON Tracks.albumTitle = Albums.albumTitle AND Tracks.band = Albums.band INNER JOIN Producers ON Producers.albumTitle = Albums.albumTitle AND Producers.band = Albums.band
+```
