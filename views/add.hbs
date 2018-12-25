@@ -31,5 +31,20 @@
         <input type="text" name="device" class="form-control" placeholder="Enter device...">
     </div>
 
+    <div class="form-group" id="tracks">
+        <label>Tracks</label>
+
+        <table class="table">
+            <tr>
+                <td class="track-nr">1</td>
+                <td><input type="text" name="track" class="form-control" placeholder="Name..."></td>
+                <td><input type="text" name="length" class="form-control" placeholder="Length..."></td>
+                <td><button class="btn btn-danger remove-track">Remove</button></td>
+            </tr>
+        </table>
+
+        <button id="add-track" class="btn btn-secondary">Add track</button>
+    </div>
+
     <button type="submit" class="btn btn-primary">Add</button>
 </form>
