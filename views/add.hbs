@@ -3,32 +3,52 @@
 <form action="/add" method="POST">
     <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" name="title" class="form-control" placeholder="Enter album title...">
+        <input type="text" name="title" class="form-control" placeholder="Enter album title..." required>
     </div>
 
     <div class="form-group">
-        <label for="artist">Artist</label>
-        <input type="text" name="artist" class="form-control" placeholder="Enter artist...">
+        <label for="artist">Band</label>
+        <input type="text" name="artist" class="form-control" placeholder="Enter band..." required>
     </div>
 
     <div class="form-group">
         <label for="genre">Genre</label>
-        <input type="text" name="genre" class="form-control" placeholder="Enter genre...">
+        <select class="form-control" name="genre">
+            <option value="rock">Rock</option>
+            <option value="metal">Metal</option>
+            <option value="pop">Pop</option>
+            <option value="jazz">Jazz</option>
+            <option value="house">House</option>
+            <option value="contry">Country</option>
+            <option value="other">Other</option>
+        </select>
     </div>
 
     <div class="form-group">
         <label for="year">Year</label>
-        <input type="text" name="year" class="form-control" placeholder="Enter year...">
+        <input type="text" name="year" class="form-control" placeholder="Enter year..." min="4" max="4" required>
+    </div>
+
+    <div class="form-group">
+        <label for="producer">Producer</label>
+        <input type="text" name="producer" class="form-control" placeholder="Enter producers (ex. John Doe, Will Smith)"
+            required>
     </div>
 
     <div class="form-group">
         <label for="label">Label</label>
-        <input type="text" name="label" class="form-control" placeholder="Enter label...">
+        <input type="text" name="label" class="form-control" placeholder="Enter label..." required>
     </div>
 
     <div class="form-group">
         <label for="device">Device</label>
-        <input type="text" name="device" class="form-control" placeholder="Enter device...">
+        <select class="form-control" name="device">
+            <option value="cd">CD</option>
+            <option value="lp">LP</option>
+            <option value="cassette">Cassette</option>
+            <option value="digital">Digital</option>
+            <option value="other">Other</option>
+        </select>
     </div>
 
     <div class="form-group" id="tracks">
@@ -37,8 +57,8 @@
         <table class="table">
             <tr>
                 <td class="track-nr">1</td>
-                <td><input type="text" name="track" class="form-control" placeholder="Name..."></td>
-                <td><input type="text" name="length" class="form-control" placeholder="Length..."></td>
+                <td><input type="text" name="track" class="form-control" placeholder="Name..." required></td>
+                <td><input type="text" name="length" class="form-control" placeholder="Length..." required></td>
                 <td><button class="btn btn-danger remove-track">Remove</button></td>
             </tr>
         </table>
