@@ -1,0 +1,19 @@
+<h1>{{album.albumTitle}}</h1>
+<h2>{{album.band}}</h2>
+
+<p>{{album.label}}</p>
+<p>{{album.device}}</p>
+<p>{{album.genre}}</p>
+<p>{{album.year}}</p>
+
+<br>
+
+{{#each producers}}
+<p>{{name}}</p>
+{{/each}}
+
+<br>
+
+{{#each tracks}}
+<p>{{name}} - {{length}}</p>
+{{/each}}
