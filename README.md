@@ -29,11 +29,11 @@ The relationship between **Albums** and **Tracks** is _many-many_ since an album
 
 ## SQL Design
 
-Albums(label, device, genre, albumTtitle, band, year)
+Albums(label, device, genre, title, band, year, id)
 
-Tracks(name, length, albumTitle, band)
+Tracks(name, length, albumId)
 
-Producers(name, albumTitle, band)
+Producers(name, albumId)
 
 I did not convert the relations to tables since this would cause redundancy. This is because they are a part of the weak entity sets **Producers** and **Tracks**. I did rename some of the attributes just to make it a bit clearer when combining attributes from different entities.
 
@@ -42,7 +42,7 @@ I did not convert the relations to tables since this would cause redundancy. Thi
 **Search for an album by title or band**
 
 ```sql
-SELECT albumTitle FROM Albums WHERE albumTitle LIKE 'query%' OR band LIKE 'query%'
+SELECT title FROM Albums WHERE title LIKE 'query%' OR band LIKE 'query%'
 ```
 
 The query will return rows where part of the the album title or band matches.
@@ -50,15 +50,15 @@ The query will return rows where part of the the album title or band matches.
 **Sort albums by length**
 
 ```sql
-SELECT albumTitle, length FROM Tracks GROUP BY albumTitle ORDER BY SUM(length)
+SELECT title FROM Albums, Tracks GROUP BY title ORDER BY SUM(length)
 ```
 
-Will be used when we want to list the albums by length. This query uses two tables and the values are grouped by title. Album title and length will be selected since that's the values that will be displayed in the application. 
+Will be used when we want to list the albums by length. This query uses two tables and the values are grouped by title. Album title and length will be selected since that's the values that will be displayed in the application.
 
 **Get the length of an album**
 
 ```sql
-SELECT SUM(length) FROM Tracks WHERE band = 'x' AND title = 'y'
+SELECT SUM(length) FROM Tracks WHERE albumId = 'x'
 ```
 
 Used when displaying an individual albums length.
@@ -66,7 +66,7 @@ Used when displaying an individual albums length.
 **Filter albums by producer and label**
 
 ```sql
-SELECT albumTitle FROM Albums WHERE label = 'x' INNER JOIN Producers ON Producers.albumTitle = Albums.albumTitle
+SELECT title FROM Albums WHERE label = 'x' INNER JOIN Producers ON Producers.albumId = id
 ```
 
 This query will be used as a part of the filter function when searching for albums.
@@ -74,7 +74,7 @@ This query will be used as a part of the filter function when searching for albu
 **Get all information about a specific album**
 
 ```sql
-SELECT * FROM Albums WHERE band = 'x' AND albumTitle = 'y' INNER JOIN Tracks ON Tracks.albumTitle = Albums.albumTitle AND Tracks.band = Albums.band INNER JOIN Producers ON Producers.albumTitle = Albums.albumTitle AND Producers.band = Albums.band
+SELECT * FROM Albums INNER JOIN Tracks ON Tracks.albumId = id INNER JOIN Producers ON Producers.albumId = id WHERE Albums.band = 'x' AND Albums.title = 'y'
 ```
 
 This query will be used in conjunction with the query that returns the length of an album when displaying an album in detail.
