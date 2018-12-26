@@ -1,0 +1,29 @@
+<h1>Manage your albums</h1>
+
+{{#if albums}}
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Band</th>
+        <th>Year</th>
+        <th>Device</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    {{#each albums }}
+    <tr>
+        <td>{{title}}</td>
+        <td>{{band}}</td>
+        <td>{{year}}</td>
+        <td>{{device}}</td>
+        <td><a class="btn btn-primary" href="/view/{{id}}">View</a></td>
+        <td><a class="btn btn-success" href="/edit/{{id}}">Edit</a></td>
+        <td><a class="btn btn-danger" href="/delete/{{id}}">Delete</a></td>
+    </tr>
+    {{/each}}
+</table>
+
+{{else}}
+<p>You haven't added any albums...</p>
+{{/if}}
