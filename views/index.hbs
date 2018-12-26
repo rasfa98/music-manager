@@ -4,9 +4,9 @@
     {{#each rows}}
     <div class="card col-sm-6">
         <div class="card-body">
-            <h5 class="card-title">{{albumTitle}}</h5>
+            <h5 class="card-title">{{title}}</h5>
             <p class="card-text">{{band}}</p>
-            <a href="/view?band={{band}}&albumTitle={{albumTitle}}">View album</a>
+            <a href="/view/{{id}}">View album</a>
         </div>
     </div>
     {{/each}}

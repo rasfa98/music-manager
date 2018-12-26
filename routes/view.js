@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-router.route('/').get((req, res) => {
+router.route('/:id').get((req, res) => {
   const db = req.app.get('db');
 
   const context = {
@@ -11,9 +11,7 @@ router.route('/').get((req, res) => {
 
   db.serialize(() => {
     db.all(
-      `SELECT * FROM Albums WHERE albumTitle = '${
-        req.query.albumTitle
-      }' AND band = '${req.query.band}'`,
+      `SELECT * FROM Albums WHERE id = '${req.params.id}'`,
       (err, rows) => {
         if (err) {
           console.log(err);
@@ -24,9 +22,7 @@ router.route('/').get((req, res) => {
     );
 
     db.all(
-      `SELECT * FROM Tracks WHERE albumTitle = '${
-        req.query.albumTitle
-      }' AND band = '${req.query.band}'`,
+      `SELECT * FROM Tracks WHERE albumId = '${req.params.id}'`,
       (err, rows) => {
         if (err) {
           console.log(err);
@@ -37,9 +33,7 @@ router.route('/').get((req, res) => {
     );
 
     db.all(
-      `SELECT * FROM Producers WHERE albumTitle = '${
-        req.query.albumTitle
-      }' AND band = '${req.query.band}'`,
+      `SELECT * FROM Producers WHERE albumId = '${req.params.id}'`,
       (err, rows) => {
         if (err) {
           console.log(err);
