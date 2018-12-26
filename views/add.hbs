@@ -7,13 +7,13 @@
     </div>
 
     <div class="form-group">
-        <label for="artist">Band</label>
-        <input type="text" name="artist" class="form-control" placeholder="Enter band..." required>
+        <label for="band">Band</label>
+        <input type="text" name="band" class="form-control" placeholder="Enter band..." required>
     </div>
 
     <div class="form-group">
         <label for="genre">Genre</label>
-        <select class="form-control" name="genre">
+        <select class="form-control" name="genre" required>
             <option value="rock">Rock</option>
             <option value="metal">Metal</option>
             <option value="pop">Pop</option>
@@ -42,7 +42,7 @@
 
     <div class="form-group">
         <label for="device">Device</label>
-        <select class="form-control" name="device">
+        <select class="form-control" name="device" required>
             <option value="cd">CD</option>
             <option value="lp">LP</option>
             <option value="cassette">Cassette</option>
@@ -68,3 +68,5 @@
 
     <button type="submit" class="btn btn-primary">Add</button>
 </form>
+
+<script src="/js/addTrack.js"></script>
