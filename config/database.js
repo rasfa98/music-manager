@@ -5,14 +5,12 @@ module.exports.connect = () => {
 
   db.serialize(() => {
     db.run(
-      'CREATE TABLE IF NOT EXISTS Albums (label CHAR, device CHAR, genre CHAR, albumTitle TEXT, band CHAR, year INT(4))'
+      'CREATE TABLE IF NOT EXISTS Albums (label CHAR, device CHAR, genre CHAR, title TEXT, band CHAR, year INT(4), id CHAR)'
     );
     db.run(
-      'CREATE TABLE IF NOT EXISTS Tracks (name CHAR, length INT, albumTitle TEXT, band CHAR, trackNr INT)'
+      'CREATE TABLE IF NOT EXISTS Tracks (name CHAR, length INT, trackNr INT, albumId INT)'
     );
-    db.run(
-      'CREATE TABLE IF NOT EXISTS Producers (name CHAR, albumTitle TEXT, band CHAR)'
-    );
+    db.run('CREATE TABLE IF NOT EXISTS Producers (name CHAR, albumId INT)');
   });
 
   console.log(`Connected to database: ${process.env.DB_NAME}...`);

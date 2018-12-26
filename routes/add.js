@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const uniqid = require('uniqid');
 
 router
   .route('/')
@@ -9,46 +10,45 @@ router
     const db = req.app.get('db');
     const data = req.body;
     const producers = data.producer.split(',');
+    const id = uniqid();
 
     db.serialize(() => {
       db.run(
-        'INSERT INTO Albums (label, device, genre, albumTitle, band, year) VALUES (?, ?, ?, ?, ?, ?)',
+        'INSERT INTO Albums (label, device, genre, title, band, year, id) VALUES (?, ?, ?, ?, ?, ?, ?)',
         data.label,
         data.device,
         data.genre,
         data.title,
         data.band,
-        data.year
+        data.year,
+        id
       );
 
       if (Array.isArray(data.track)) {
         for (let i = 0; i < data.track.length; i++) {
           db.run(
-            'INSERT INTO Tracks (name, length, albumTitle, band, trackNr) VALUES (?, ?, ?, ?, ?)',
+            'INSERT INTO Tracks (name, length, trackNr, albumId) VALUES (?, ?, ?, ?)',
             data.track[i],
             data.length[i],
-            data.title,
-            data.band,
-            i + 1
+            i + 1,
+            id
           );
         }
       } else {
         db.run(
-          'INSERT INTO Tracks (name, length, albumTitle, band, trackNr) VALUES (?, ?, ?, ?, ?)',
+          'INSERT INTO Tracks (name, length, trackNr, albumId) VALUES (?, ?, ?, ?)',
           data.track,
           data.length,
-          data.title,
-          data.band,
-          1
+          1,
+          id
         );
       }
 
       for (let i = 0; i < producers.length; i++) {
         db.run(
-          'INSERT INTO Producers (name, albumTitle, band) VALUES (?, ?, ?)',
+          'INSERT INTO Producers (name, albumId) VALUES (?, ?)',
           producers[i],
-          data.title,
-          data.band,
+          id,
           () => {
             req.session.flash = {
               type: 'success',

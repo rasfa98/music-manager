@@ -31,7 +31,7 @@ The relationship between **Albums** and **Tracks** is _many-many_ since an album
 
 Albums(label, device, genre, title, band, year, id)
 
-Tracks(name, length, albumId)
+Tracks(name, length, trackNr, albumId)
 
 Producers(name, albumId)
 
