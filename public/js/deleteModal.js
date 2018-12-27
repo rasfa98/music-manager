@@ -2,11 +2,12 @@ const modal = document.querySelector('#delete-modal');
 const albumName = modal.querySelector('b');
 const manageTable = document.querySelector('table');
 const form = document.querySelector('form');
+const cancelDelete = document.querySelector('#cancel');
 
-modal.addEventListener('click', e => {
-  if ((e.target.id = 'cancel')) {
-    modal.style.display = 'none';
-  }
+cancelDelete.addEventListener('click', e => {
+  e.preventDefault();
+
+  modal.style.display = 'none';
 });
 
 manageTable.addEventListener('click', e => {

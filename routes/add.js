@@ -49,7 +49,7 @@ router
 
       for (let i = 0; i < producers.length; i++) {
         rowData.push(producers[i], id);
-        stmt += '(?, ?)';
+        stmt += '(?, ?),';
       }
 
       stmt = stmt.slice(0, stmt.length - 1);
