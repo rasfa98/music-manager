@@ -44,21 +44,24 @@ router
         );
       }
 
-      for (let i = 0; i < producers.length; i++) {
-        db.run(
-          'INSERT INTO Producers (name, albumId) VALUES (?, ?)',
-          producers[i],
-          id,
-          () => {
-            req.session.flash = {
-              type: 'success',
-              message: 'Album was successfully added!'
-            };
+      let stmt = 'INSERT INTO Producers (name, albumId) VALUES ';
+      const rowData = [];
 
-            res.redirect('/');
-          }
-        );
+      for (let i = 0; i < producers.length; i++) {
+        rowData.push(producers[i], id);
+        stmt += '(?, ?)';
       }
+
+      stmt = stmt.slice(0, stmt.length - 1);
+
+      db.run(stmt, rowData, () => {
+        req.session.flash = {
+          type: 'success',
+          message: 'Album was successfully added!'
+        };
+
+        res.redirect('/');
+      });
     });
   });
 
