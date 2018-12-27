@@ -1,3 +1,10 @@
+<div id="delete-modal" class="alert alert-danger" style="display: none">Do you really want to delete <b></b>?
+    <form action="" method="POST">
+        <button type="submit" class="btn btn-success">Yes, delete!</button>
+        <button id="cancel" class="btn btn-secondary">Cancel...</button>
+    </form>
+</div>
+
 <h1>Manage your albums</h1>
 
 {{#if albums}}
@@ -13,13 +20,13 @@
     </tr>
     {{#each albums }}
     <tr>
-        <td>{{title}}</td>
+        <td id="album-title">{{title}}</td>
         <td>{{band}}</td>
         <td>{{year}}</td>
         <td>{{device}}</td>
         <td><a class="btn btn-primary" href="/view/{{id}}">View</a></td>
         <td><a class="btn btn-success" href="/edit/{{id}}">Edit</a></td>
-        <td><a class="btn btn-danger" href="/delete/{{id}}">Delete</a></td>
+        <td><button class="btn btn-danger delete-album" data-title="{{title}}" data-id="{{id}}">Delete</button></td>
     </tr>
     {{/each}}
 </table>
@@ -27,3 +34,5 @@
 {{else}}
 <p>You haven't added any albums...</p>
 {{/if}}
+
+<script src="/js/deleteModal.js"></script>

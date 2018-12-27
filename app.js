@@ -33,4 +33,5 @@ app.use('/', require('./routes/index'));
 app.use('/add', require('./routes/add'));
 app.use('/view', require('./routes/view'));
 app.use('/edit', require('./routes/edit'));
+app.use('/delete', require('./routes/delete'));
 app.use('/manage', require('./routes/manage'));
