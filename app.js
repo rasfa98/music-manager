@@ -35,3 +35,4 @@ app.use('/view', require('./routes/view'));
 app.use('/edit', require('./routes/edit'));
 app.use('/delete', require('./routes/delete'));
 app.use('/manage', require('./routes/manage'));
+app.use('/search', require('./routes/search'));
