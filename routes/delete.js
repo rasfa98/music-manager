@@ -1,20 +1,17 @@
 const router = require('express').Router();
+const databaseQueries = require('../lib/databaseQueries');
 
-router.route('/:id').post((req, res) => {
+router.route('/:id').post(async (req, res) => {
   const db = req.app.get('db');
 
-  db.serialize(() => {
-    db.run(`DELETE FROM Albums WHERE id = '${req.params.id}'`);
-    db.run(`DELETE FROM Tracks WHERE albumId = '${req.params.id}'`);
-    db.run(`DELETE FROM Producers WHERE albumId = '${req.params.id}'`, () => {
-      req.session.flash = {
-        type: 'success',
-        message: 'Album was successfully deleted.'
-      };
+  await databaseQueries.deleteAlbum(db, req.params.id);
 
-      res.redirect('/manage');
-    });
-  });
+  req.session.flash = {
+    type: 'success',
+    message: 'Album was successfully deleted.'
+  };
+
+  res.redirect('/manage');
 });
 
 module.exports = router;

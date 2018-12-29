@@ -1,7 +1,7 @@
 const modal = document.querySelector('#delete-modal');
 const albumName = modal.querySelector('b');
 const manageTable = document.querySelector('table');
-const form = document.querySelector('form');
+const form = document.querySelector('#modal-form');
 const cancelDelete = document.querySelector('#cancel');
 
 cancelDelete.addEventListener('click', e => {

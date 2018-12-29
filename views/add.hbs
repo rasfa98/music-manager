@@ -1,58 +1,76 @@
 <h1>Add new album</h1>
 
 <form action="/add" method="POST">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" name="title" class="form-control" placeholder="Enter album title..." required>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" name="title" class="form-control" placeholder="The Great Album" required>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="band">Band</label>
+                <input type="text" name="band" class="form-control" placeholder="John Doe" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="genre">Genre</label>
+                <input type="text" name="genre" class="form-control" placeholder="Rock" required>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="text" name="year" class="form-control" placeholder="1994" min="4" max="4" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="label">Label</label>
+                <input type="text" name="label" class="form-control" placeholder="Hello World Records" required>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="device">Device</label>
+                <input type="text" name="device" class="form-control" placeholder="CD" required>
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
-        <label for="band">Band</label>
-        <input type="text" name="band" class="form-control" placeholder="Enter band..." required>
-    </div>
-
-    <div class="form-group">
-        <label for="genre">Genre</label>
-        <input type="text" name="genre" class="form-control" placeholder="Enter genre..." required>
-    </div>
-
-    <div class="form-group">
-        <label for="year">Year</label>
-        <input type="text" name="year" class="form-control" placeholder="Enter year..." min="4" max="4" required>
-    </div>
-
-    <div class="form-group">
-        <label for="producer">Producer</label>
-        <input type="text" name="producer" class="form-control" placeholder="Enter producers (ex. John Doe, Will Smith)"
-            required>
-    </div>
-
-    <div class="form-group">
-        <label for="label">Label</label>
-        <input type="text" name="label" class="form-control" placeholder="Enter label..." required>
-    </div>
-
-    <div class="form-group">
-        <label for="device">Device</label>
-        <input type="text" name="device" class="form-control" placeholder="Enter device..." required>
+        <label for="producer">Producers</label>
+        <input type="text" name="producer" class="form-control" placeholder="John Doe, Will Smith" required>
     </div>
 
     <div class="form-group" id="tracks">
         <label>Tracks</label>
 
+        <button id="add-track" class="btn btn-link float-right">Add another track...</button>
+
         <table class="table">
             <tr>
                 <td class="track-nr">1</td>
-                <td><input type="text" name="track" class="form-control" placeholder="Name..." required></td>
-                <td><input type="text" name="length" class="form-control" placeholder="Length..." required></td>
-                <td><button class="btn btn-danger remove-track">Remove</button></td>
+                <td><input type="text" name="track" class="form-control" placeholder="Hello World!" required></td>
+                <td><input type="text" name="length" class="form-control" placeholder="3:12" required></td>
+                <td><button class="btn btn-danger remove-track"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
         </table>
-
-        <button id="add-track" class="btn btn-secondary">Add track</button>
     </div>
 
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-success">Add</button>
+    <a class="btn btn-dark" href="/">Cancel</a>
 </form>
 
 <script src="/js/addTrack.js"></script>
