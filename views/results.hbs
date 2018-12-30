@@ -1,10 +1,10 @@
-<div class="row">
+<div class="row justify-content-center">
     {{#each albums}}
-    <div class="card col-sm-6">
+    <div class="card col-sm-5 m-2">
         <div class="card-body">
-            <h5 class="card-title">{{title}}</h5>
-            <p class="card-text">{{band}}</p>
-            <a href="/view/{{id}}">View album</a>
+            <h5 class="card-title"><i class="fab fa-itunes-note"></i> {{title}}</h5>
+            <p class="card-text"><i class="fas fa-user-alt"></i> {{band}}</p>
+            <a href="/view/{{id}}">Details <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
     {{/each}}

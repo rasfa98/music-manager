@@ -1,19 +1,25 @@
 <h1>{{album.title}}</h1>
-<h2>{{album.band}}</h2>
-
-<p>{{album.label}}</p>
-<p>{{album.device}}</p>
-<p>{{album.genre}}</p>
-<p>{{album.year}}</p>
+<h4>{{album.band}}</h4>
 
 <br>
 
-{{#each producers}}
-<p>{{name}}</p>
-{{/each}}
+<h3>Basic information</h3>
+
+<ul class="list-group mt-4">
+    <li class="list-group-item"><i class="fas fa-compact-disc"></i> {{album.label}}</li>
+    <li class="list-group-item"><i class="far fa-calendar-alt"></i> {{album.year}}</li>
+    <li class="list-group-item"><i class="fas fa-users"></i> {{producers}}</li>
+    <li class="list-group-item"><i class="fas fa-play"></i> {{album.device}}</li>
+    <li class="list-group-item"><i class="fab fa-itunes-note"></i> {{album.genre}}</li>
+</ul>
 
 <br>
+<br>
 
-{{#each tracks}}
-<p>{{name}} - {{length}}</p>
-{{/each}}
+<h3>Track list</h3>
+
+<ul class="list-group mt-4">
+    {{#each tracks}}
+    <li class="list-group-item">{{trackNr}} {{name}}, {{length}}</li>
+    {{/each}}
+</ul>
