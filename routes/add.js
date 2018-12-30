@@ -33,7 +33,7 @@ router
       await databaseQueries.addTrack(db, newTrack);
     }
 
-    const producers = req.body.producer.split(',');
+    const producers = req.body.producer.split(', ');
 
     for (let i = 0; i < producers.length; i++) {
       const newProducer = [producers[i], id];

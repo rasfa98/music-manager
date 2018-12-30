@@ -1,20 +1,12 @@
 const router = require('express').Router();
+const databaseQueries = require('../lib/databaseQueries');
 
-router.route('/').get((req, res) => {
+router.route('/').get(async (req, res) => {
   const db = req.app.get('db');
 
-  db.all(
-    `SELECT * FROM Albums WHERE title LIKE '${
-      req.query.query
-    }%' OR band LIKE '${req.query.query}%'`,
-    (err, rows) => {
-      if (err) {
-        console.log(err);
-      }
+  const albums = await databaseQueries.searchAlbum(db, req.query.query);
 
-      res.render('results', { rows: rows });
-    }
-  );
+  res.render('results', { albums: albums });
 });
 
 module.exports = router;

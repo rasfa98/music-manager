@@ -1,50 +1,12 @@
 const router = require('express').Router();
+const databaseQueries = require('../lib/databaseQueries');
 
-router.route('/:id').get((req, res) => {
+router.route('/:id').get(async (req, res) => {
   const db = req.app.get('db');
 
-  const context = {
-    album: null,
-    tracks: null,
-    producers: null
-  };
+  const album = await databaseQueries.getAllAlbumDetails(db, req.params.id);
 
-  db.serialize(() => {
-    db.all(
-      `SELECT * FROM Albums WHERE id = '${req.params.id}'`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-        }
-
-        context.album = rows[0];
-      }
-    );
-
-    db.all(
-      `SELECT * FROM Tracks WHERE albumId = '${req.params.id}'`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-        }
-
-        context.tracks = rows;
-      }
-    );
-
-    db.all(
-      `SELECT * FROM Producers WHERE albumId = '${req.params.id}'`,
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-        }
-
-        context.producers = rows;
-
-        res.render('view', context);
-      }
-    );
-  });
+  res.render('view', album);
 });
 
 module.exports = router;

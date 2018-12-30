@@ -1,15 +1,12 @@
 const router = require('express').Router();
+const databaseQueries = require('../lib/databaseQueries');
 
-router.route('/').get((req, res) => {
+router.route('/').get(async (req, res) => {
   const db = req.app.get('db');
 
-  db.all('SELECT * FROM Albums', (err, rows) => {
-    if (err) {
-      console.log(err);
-    }
+  const albums = await databaseQueries.getAlbums(db);
 
-    res.render('manage', { albums: rows });
-  });
+  res.render('manage', { albums: albums });
 });
 
 module.exports = router;
