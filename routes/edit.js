@@ -6,9 +6,9 @@ router
   .get(async (req, res) => {
     const db = req.app.get('db');
 
-    const context = await databaseQueries.getAllAlbumDetails(db, req.params.id);
+    const album = await databaseQueries.getAllAlbumDetails(db, req.params.id);
 
-    res.render('edit', context);
+    res.render('edit', album);
   })
   .post(async (req, res) => {
     const db = req.app.get('db');

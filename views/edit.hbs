@@ -59,7 +59,7 @@
 
     <div class="form-group">
         <label for="producer">Producers</label>
-        <input type="text" name="producer" class="form-control" placeholder="John Doe, Will Smith" value="{{producers}}"
+        <input type="text" name="producer" class="form-control" placeholder="John Doe, Will Smith" value="{{album.producers}}"
             required>
     </div>
 
@@ -71,7 +71,7 @@
         <table class="table">
             {{#each tracks}}
             <tr>
-                <td class="track-nr">{{trackNr}}</td>
+                <td class="track-nr">{{nr}}</td>
                 <td><input type="text" name="track" class="form-control" placeholder="Hello World!" value="{{name}}"
                         required></td>
                 <td><input type="text" name="length" class="form-control" placeholder="3:12" value="{{length}}"
