@@ -1,3 +1,4 @@
+{{#if albums}}
 <div class="row justify-content-center">
     {{#each albums}}
     <div class="card col-sm-5 m-2">
@@ -9,3 +10,8 @@
     </div>
     {{/each}}
 </div>
+{{else}}
+<p>Could not find any matching albums...</p>
+{{/if}}
+
+<script src="/js/toggleAdvancedSearch.js"></script>
