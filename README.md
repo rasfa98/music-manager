@@ -13,9 +13,10 @@ The main users are people collecting music as a hobby or just anyone that would 
 - Add albums
 - Edit albums
 - List albums
+- View Specific album
 - Remove albums
-- Search for a specific album
-- Filter search results
+- Search for albums
+- Sort albums
 
 ## Logical Model
 
@@ -39,42 +40,47 @@ I did not convert the relations to tables since this would cause redundancy. Thi
 
 ## SQL Queries
 
-**Search for an album by title or band**
+**Search albums by title or band**
 
 ```sql
-SELECT title FROM Albums WHERE title LIKE 'query%' OR band LIKE 'query%'
+SELECT * FROM Albums WHERE title LIKE 'x%' OR band LIKE 'x%'
 ```
-
-The query will return rows where part of the the album title or band matches.
 
 **Sort albums by length**
 
 ```sql
-SELECT title FROM Albums, Tracks GROUP BY title ORDER BY SUM(length)
+SELECT id, title, band FROM Albums INNER JOIN Tracks ON id = albumId GROUP BY albumId ORDER BY SUM(length) DESC
 ```
 
-Will be used when we want to list the albums by length. This query uses two tables and the values are grouped by title. Album title and length will be selected since that's the values that will be displayed in the application.
-
-**Get the length of an album**
+**Sort albums by most tracks**
 
 ```sql
-SELECT SUM(length) FROM Tracks WHERE albumId = 'x'
+SELECT id, title, band FROM Albums INNER JOIN Tracks ON id = albumId GROUP BY albumId ORDER BY COUNT(albumId) DESC
 ```
 
-Used when displaying an individual albums length.
-
-**Filter albums by producer and label**
+**Sort albums by most fewest tracks**
 
 ```sql
-SELECT title FROM Albums WHERE label = 'x' INNER JOIN Producers ON Producers.albumId = id
+SELECT id, title, band FROM Albums INNER JOIN Tracks ON id = albumId GROUP BY albumId ORDER BY COUNT(albumId)
 ```
 
-This query will be used as a part of the filter function when searching for albums.
-
-**Get all information about a specific album**
+**Get all information about a speific album**
 
 ```sql
-SELECT * FROM Albums INNER JOIN Tracks ON Tracks.albumId = id INNER JOIN Producers ON Producers.albumId = id WHERE Albums.band = 'x' AND Albums.title = 'y'
+SELECT title,
+       band,
+       genre,
+       year,
+       label,
+       device,
+       GROUP_CONCAT(DISTINCT Producers.name) AS producers,
+       GROUP_CONCAT(DISTINCT Tracks.name) AS trackNames,
+       GROUP_CONCAT(DISTINCT length) AS trackLengths,
+       GROUP_CONCAT(DISTINCT trackNr) AS trackNumbers,
+       SELECT COUNT(DISTINCT trackNr) AS numberOfTracks,
+       SUM(DISTINCT length) AS albumLength
+FROM Albums
+INNER JOIN Producers ON Producers.albumId = id
+INNER JOIN Tracks ON Tracks.albumId = id
+WHERE id = 'x'
 ```
-
-This query will be used in conjunction with the query that returns the length of an album when displaying an album in detail.
