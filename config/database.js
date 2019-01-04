@@ -5,12 +5,45 @@ module.exports.connect = () => {
 
   db.serialize(() => {
     db.run(
-      'CREATE TABLE IF NOT EXISTS Albums (label CHAR, device CHAR, genre CHAR, title TEXT, band CHAR, year INT(4), id CHAR)'
+      'CREATE TABLE IF NOT EXISTS Albums (label CHAR, device CHAR, genre CHAR, albumTitle TEXT, band CHAR, year INT(4), albumId CHAR)',
+      (db, err) => {
+        if (err) {
+          console.log(err);
+        }
+      }
     );
     db.run(
-      'CREATE TABLE IF NOT EXISTS Tracks (name CHAR, length INT, trackNr INT, albumId INT)'
+      'CREATE TABLE IF NOT EXISTS Tracks (trackName CHAR, trackLength INT, trackNr INT, trackId CHAR)',
+      (db, err) => {
+        if (err) {
+          console.log(err);
+        }
+      }
     );
-    db.run('CREATE TABLE IF NOT EXISTS Producers (name CHAR, albumId INT)');
+    db.run(
+      'CREATE TABLE IF NOT EXISTS Producers (producerName CHAR, producerId CHAR)',
+      (db, err) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+    db.run(
+      'CREATE TABLE IF NOT EXISTS Produces (albumId CHAR, producerId CHAR)',
+      (db, err) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+    db.run(
+      'CREATE TABLE IF NOT EXISTS MadeOf (albumId CHAR, trackId CHAR)',
+      (db, err) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
   });
 
   console.log(`Connected to database: ${process.env.DB_NAME}...`);
