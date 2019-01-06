@@ -32,59 +32,58 @@ The relationship between **Albums** and **Tracks** is _many-many_ since an album
 
 Albums(label, device, genre, albumTitle, band, year, albumId)
 
-Produces(albumId, producerId)
+ProducedBy(albumId, producerId)
 
 MadeOf(albumId, trackId)
 
-Tracks(trackName, trackLength, trackNr, trackId)
+Tracks(trackName, trackLength, trackId)
 
 Producers(producerName, producerId)
 
-I did convert the relationships into tables in order to remove rendundancy, since the relationships are _many-many_.
+I did convert the relationships into tables since it would cause rendundancy because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables.
 
 ## SQL Queries
 
 **Search albums by title or band**
 
 ```sql
-SELECT id, title, band FROM Albums WHERE title LIKE 'x%' OR band LIKE 'x%'
+SELECT albumId, albumTitle, band FROM Albums WHERE albumTitle LIKE 'x%' OR band LIKE 'x%'
 ```
+
+This query will be used when searching for an album. I'm using the _LIKE_ operator in order to get the tuples where the album title or band starts with the given query. I'm only selecting the columns that will be used.
 
 **Sort albums by length**
 
 ```sql
-SELECT id, title, band FROM Albums INNER JOIN Tracks ON id = albumId GROUP BY albumId ORDER BY SUM(length) DESC
+SELECT Albums.albumId, albumTitle, band FROM Albums, MadeOf INNER JOIN Tracks ON MadeOf.trackId = Tracks.trackId AND MadeOf.albumId = Albums.albumId GROUP BY Albums.albumId ORDER BY SUM(trackLength) DESC
 ```
+
+This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by length in descending order. I'm grouping the results by id and using the aggregate function _SUM_ to calculate the length of an album by adding the length of all tracks that contains the album id.
 
 **Sort albums by most tracks**
 
 ```sql
-SELECT id, title, band FROM Albums INNER JOIN Tracks ON id = albumId GROUP BY albumId ORDER BY COUNT(albumId) DESC
+SELECT Albums.albumId, albumTitle, band FROM Albums INNER JOIN MadeOf ON MadeOf.albumId = Albums.albumId GROUP BY Albums.albumId ORDER BY COUNT(MadeOf.trackId) DESC
 ```
+
+This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by the number of tracks in descending order. I'm grouping the results by id and using the aggregate function _COUNT_ to calculate the number of tracks.
 
 **Sort albums by most fewest tracks**
 
-```sql
-SELECT id, title, band FROM Albums INNER JOIN Tracks ON id = albumId GROUP BY albumId ORDER BY COUNT(albumId)
-```
+This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by the number of tracks in ascending order. I'm grouping the results by id and using the aggregate function _COUNT_ to calculate the number of tracks.
 
 **Get all information about a speific album**
 
 ```sql
-SELECT title,
-       band,
-       genre,
-       year,
-       label,
-       device,
-       GROUP_CONCAT(DISTINCT Producers.name) AS producers,
-       GROUP_CONCAT(DISTINCT Tracks.name) AS trackNames,
-       GROUP_CONCAT(DISTINCT length) AS trackLengths,
-       GROUP_CONCAT(DISTINCT trackNr) AS trackNumbers,
-       SELECT COUNT(DISTINCT trackNr) AS numberOfTracks,
-       SUM(DISTINCT length) AS albumLength
-FROM Albums
-INNER JOIN Producers ON Producers.albumId = id
-INNER JOIN Tracks ON Tracks.albumId = id
-WHERE id = 'x'
+SELECT Albums.albumId, albumTitle, band, genre, year, label, device,
+            GROUP_CONCAT(DISTINCT producerName) AS producers,
+            GROUP_CONCAT(DISTINCT trackName) AS trackNames,
+            GROUP_CONCAT(DISTINCT trackLength) AS trackLengths,
+            COUNT(DISTINCT trackName) AS numberOfTracks,
+            SUM(DISTINCT trackLength) AS albumLength FROM Albums, ProducedBy, MadeOf
+            INNER JOIN Producers ON Producers.producerId = ProducedBy.producerId
+            INNER JOIN Tracks ON Tracks.trackId = MadeOf.trackId
+            WHERE Albums.albumId = 'x' AND ProducedBy.albumId = 'x' AND MadeOf.albumId = 'x'
 ```
+
+This query will be used to get the details about a specific album. It will be used when viewing an album as well as editing an existing one. This is a multirelational query that uses all tables in the database to combine the data from **Albums**, **Tracks** and **Producers**. I'm using the aggregate function _GROUP_CONCAT_ to join columns with the same name which make it possible to return all data in a single query. All producers, track names and lengths are concatenated into strings. I'm also adding some aggregate functions in order to return the number of tracks together with the length of the album. The reason for getting all data in a single query, was to remove the use of a transaction. It also makes the code a bit cleaner since only a single query is required.
