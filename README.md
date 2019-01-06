@@ -22,28 +22,32 @@ The main users are people collecting music as a hobby or just anyone that would 
 
 ![Logical model](/diagrams/logical-model.png)
 
-Since a track cannot be found using only the given attributes it's modeled as a weak entity set. This is also the case for the producer. Both of these entity sets are dependent on the specific album that they are present on.
+Since a track cannot be found using only the given attributes I gave it an ID just to avoid using weak entity sets. This is also the case for the producer.
 
-The reason for not including the producer and track attribues in the entity set **Albums** is to minimize redundancy. If we have multiple producers for an album the tuple would be duplicated and the only difference would be the producer. The same problem occures if the track attributes were included.
+The reason for not including the producer and track attribues in the entity set **Albums** is to minimize redundancy. If we have multiple producers for an album the tuple would be duplicated and the only difference would be the producer. The same problem occures if the track attributes were included. I reasoned that an album can only have a single band, genre and label so that's why they are included in the entity set. I found it okay to duplicate the tuples if the same album exists on multiple devices since I thnk it's required.
 
-The relationship between **Albums** and **Tracks** is _many-many_ since an album can include any numner of tracks and a specific track can be present on multiple albums. Between **Albums** and **Producers** the relation is also _many-many_ since a producer can produce many albums and a album can have multiple producers.
+The relationship between **Albums** and **Tracks** is _many-many_ since an album can include any number of tracks and a specific track can be present on multiple albums (collection of best songs etc.). Between **Albums** and **Producers** the relation is also _many-many_ since a producer can produce many albums and a album can have multiple producers.
 
 ## SQL Design
 
-Albums(label, device, genre, title, band, year, id)
+Albums(label, device, genre, albumTitle, band, year, albumId)
 
-Tracks(name, length, trackNr, albumId)
+Produces(albumId, producerId)
 
-Producers(name, albumId)
+MadeOf(albumId, trackId)
 
-I did not convert the relations to tables since this would cause redundancy. This is because they are a part of the weak entity sets **Producers** and **Tracks**. I did rename some of the attributes just to make it a bit clearer when combining attributes from different entities.
+Tracks(trackName, trackLength, trackNr, trackId)
+
+Producers(producerName, producerId)
+
+I did convert the relationships into tables in order to remove rendundancy, since the relationships are _many-many_.
 
 ## SQL Queries
 
 **Search albums by title or band**
 
 ```sql
-SELECT * FROM Albums WHERE title LIKE 'x%' OR band LIKE 'x%'
+SELECT id, title, band FROM Albums WHERE title LIKE 'x%' OR band LIKE 'x%'
 ```
 
 **Sort albums by length**

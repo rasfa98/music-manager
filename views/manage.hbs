@@ -11,19 +11,17 @@
     <tr>
         <th>Title</th>
         <th>Band</th>
-        <th>Device</th>
         <th></th>
         <th></th>
         <th></th>
     </tr>
     {{#each albums }}
     <tr>
-        <td id="album-title">{{title}}</td>
+        <td id="album-title">{{albumTitle}}</td>
         <td>{{band}}</td>
-        <td>{{device}}</td>
-        <td><a class="btn btn-primary" href="/view/{{id}}">View</a></td>
-        <td><a class="btn btn-success" href="/edit/{{id}}">Edit</a></td>
-        <td><button class="btn btn-danger delete-album" data-title="{{title}}" data-id="{{id}}">Delete</button></td>
+        <td><a class="btn btn-primary" href="/view/{{albumId}}">View</a></td>
+        <td><a class="btn btn-success" href="/edit/{{albumId}}">Edit</a></td>
+        <td><button class="btn btn-danger delete-album" data-title="{{albumTitle}}" data-id="{{albumId}}">Delete</button></td>
     </tr>
     {{/each}}
 </table>

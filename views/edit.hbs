@@ -2,12 +2,12 @@
 
 <h1>Edit album</h1>
 
-<form action="/edit/{{album.id}}" method="POST">
+<form action="/edit/{{album.albumId}}" method="POST">
     <div class="row">
         <div class="col-sm-6">
             <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" name="title" class="form-control" placeholder="The Great Album" value="{{album.title}}"
+                <label for="albumTitle">Title</label>
+                <input type="text" name="albumTitle" class="form-control" placeholder="The Great Album" value="{{album.albumTitle}}"
                     required>
             </div>
         </div>
@@ -58,8 +58,8 @@
     </div>
 
     <div class="form-group">
-        <label for="producer">Producers</label>
-        <input type="text" name="producer" class="form-control" placeholder="John Doe, Will Smith" value="{{album.producers}}"
+        <label for="producers">Producers</label>
+        <input type="text" name="producers" class="form-control" placeholder="John Doe, Will Smith" value="{{album.producers}}"
             required>
     </div>
 
@@ -71,10 +71,10 @@
         <table class="table">
             {{#each tracks}}
             <tr>
-                <td class="track-nr">{{nr}}</td>
-                <td><input type="text" name="track" class="form-control" placeholder="Hello World!" value="{{name}}"
+                <td class="track-nr">{{@index}}</td>
+                <td><input type="text" name="trackName" class="form-control" placeholder="Hello World!" value="{{trackName}}"
                         required></td>
-                <td><input type="text" name="length" class="form-control" placeholder="3:12" value="{{length}}"
+                <td><input type="text" name="trackLength" class="form-control" placeholder="3:12" value="{{trackLength}}"
                         required></td>
                 <td><button class="btn btn-danger remove-track"><i class="fas fa-trash-alt"></i></button></td>
             </tr>

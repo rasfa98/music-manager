@@ -13,7 +13,7 @@ module.exports.connect = () => {
       }
     );
     db.run(
-      'CREATE TABLE IF NOT EXISTS Tracks (trackName CHAR, trackLength INT, trackNr INT, trackId CHAR)',
+      'CREATE TABLE IF NOT EXISTS Tracks (trackName CHAR, trackLength INT, trackId CHAR)',
       (db, err) => {
         if (err) {
           console.log(err);
@@ -29,7 +29,7 @@ module.exports.connect = () => {
       }
     );
     db.run(
-      'CREATE TABLE IF NOT EXISTS Produces (albumId CHAR, producerId CHAR)',
+      'CREATE TABLE IF NOT EXISTS ProducedBy (albumId CHAR, producerId CHAR)',
       (db, err) => {
         if (err) {
           console.log(err);
