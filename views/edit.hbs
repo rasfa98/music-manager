@@ -74,7 +74,7 @@
                 <td class="track-nr">{{@index}}</td>
                 <td><input type="text" name="trackName" class="form-control" placeholder="Hello World!" value="{{trackName}}"
                         required></td>
-                <td><input type="text" name="trackLength" class="form-control" placeholder="3:12" value="{{trackLength}}"
+                <td><input type="time" name="trackLength" class="form-control" min="00:01" value="{{trackLength}}"
                         required></td>
                 <td><button class="btn btn-danger remove-track"><i class="fas fa-trash-alt"></i></button></td>
             </tr>
