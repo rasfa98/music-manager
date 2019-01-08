@@ -1,4 +1,4 @@
-<div id="delete-modal" class="alert alert-danger" style="display: none">Do you really want to delete <b></b>?
+<div id="delete-modal" class="alert alert-danger" style="display: none">Do you really want to delete <b class="text-capitalize"></b>?
     <form id="modal-form" method="POST">
         <button type="submit" class="btn btn-success">Yes, delete!</button>
         <button id="cancel" class="btn btn-secondary">Cancel...</button>
@@ -17,8 +17,8 @@
     </tr>
     {{#each albums }}
     <tr>
-        <td id="album-title">{{albumTitle}}</td>
-        <td>{{band}}</td>
+        <td id="album-title" class="text-capitalize">{{albumTitle}}</td>
+        <td class="text-capitalize">{{band}}</td>
         <td><a class="btn btn-primary" href="/view/{{albumId}}">View</a></td>
         <td><a class="btn btn-success" href="/edit/{{albumId}}">Edit</a></td>
         <td><button class="btn btn-danger delete-album" data-title="{{albumTitle}}" data-id="{{albumId}}">Delete</button></td>

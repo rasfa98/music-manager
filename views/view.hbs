@@ -6,11 +6,11 @@
 <h3>Basic information</h3>
 
 <ul class="list-group mt-4">
-    <li class="list-group-item"><i class="fas fa-compact-disc"></i> {{album.label}}</li>
+    <li class="list-group-item text-capitalize"><i class="fas fa-compact-disc"></i> {{album.label}}</li>
     <li class="list-group-item"><i class="far fa-calendar-alt"></i> {{album.year}}</li>
-    <li class="list-group-item"><i class="fas fa-users"></i> {{album.producers}}</li>
-    <li class="list-group-item"><i class="fas fa-play"></i> {{album.device}}</li>
-    <li class="list-group-item"><i class="fab fa-itunes-note"></i> {{album.genre}}</li>
+    <li class="list-group-item text-capitalize"><i class="fas fa-users"></i> {{album.producers}}</li>
+    <li class="list-group-item text-capitalize"><i class="fas fa-play"></i> {{album.device}}</li>
+    <li class="list-group-item text-capitalize"><i class="fab fa-itunes-note"></i> {{album.genre}}</li>
     <li class="list-group-item"><i class="far fa-clock"></i> {{album.albumLength}}</li>
     <li class="list-group-item"><i class="fas fa-list-ol"></i> {{album.numberOfTracks}}</li>
 </ul>
@@ -22,6 +22,6 @@
 
 <ul class="list-group mt-4">
     {{#each tracks}}
-    <li class="list-group-item">{{@index}} {{trackName}}, {{trackLength}}</li>
+    <li class="list-group-item text-capitalize">{{@index}} {{trackName}}, {{trackLength}}</li>
     {{/each}}
 </ul>
