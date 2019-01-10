@@ -5,7 +5,7 @@ module.exports.connect = () => {
 
   db.serialize(() => {
     db.run(
-      'CREATE TABLE IF NOT EXISTS Albums (label CHAR, device CHAR, genre CHAR, albumTitle TEXT, band CHAR, year INT(4), albumId CHAR)',
+      'CREATE TABLE IF NOT EXISTS Albums (label CHAR, device CHAR, genre CHAR, albumTitle TEXT, band CHAR, year INT(4), albumId CHAR PRIMARY KEY)',
       (db, err) => {
         if (err) {
           console.log(err);
@@ -14,7 +14,7 @@ module.exports.connect = () => {
     );
 
     db.run(
-      'CREATE TABLE IF NOT EXISTS Tracks (trackName CHAR, trackLength INT, trackId CHAR)',
+      'CREATE TABLE IF NOT EXISTS Tracks (trackName TEXT, trackLength INT, trackId CHAR PRIMARY KEY)',
       (db, err) => {
         if (err) {
           console.log(err);
@@ -23,7 +23,7 @@ module.exports.connect = () => {
     );
 
     db.run(
-      'CREATE TABLE IF NOT EXISTS Producers (producerName CHAR, producerId CHAR)',
+      'CREATE TABLE IF NOT EXISTS Producers (producerName CHAR, producerId CHAR PRIMARY KEY)',
       (db, err) => {
         if (err) {
           console.log(err);
@@ -32,7 +32,7 @@ module.exports.connect = () => {
     );
 
     db.run(
-      'CREATE TABLE IF NOT EXISTS ProducedBy (albumId CHAR, producerId CHAR)',
+      'CREATE TABLE IF NOT EXISTS ProducedBy (albumId CHAR, producerId CHAR PRIMARY KEY)',
       (db, err) => {
         if (err) {
           console.log(err);
@@ -41,7 +41,7 @@ module.exports.connect = () => {
     );
 
     db.run(
-      'CREATE TABLE IF NOT EXISTS MadeOf (albumId CHAR, trackId CHAR)',
+      'CREATE TABLE IF NOT EXISTS MadeOf (albumId CHAR, trackId CHAR PRIMARY KEY)',
       (db, err) => {
         if (err) {
           console.log(err);
