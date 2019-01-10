@@ -30,16 +30,17 @@ The relationship between **Albums** and **Tracks** is _many-many_ since an album
 
 ## SQL Design
 
-Albums(label, device, genre, albumTitle, band, year, albumId)
+```sql
+Albums(label CHAR, device CHAR, genre CHAR, albumTitle TEXT, band CHAR, year INT(4), albumId CHAR PRIMARY KEY)
 
-ProducedBy(albumId, producerId)
+ProducedBy(albumId CHAR, producerId CHAR PRIMARY KEY)
 
-MadeOf(albumId, trackId)
+MadeOf(albumId CHAR, trackId CHAR PRIMARY KEY)
 
-Tracks(trackName, trackLength, trackId)
+Tracks(trackName TEXT, trackLength INT, trackId CHAR PRIMARY KEY)
 
-Producers(producerName, producerId)
-
+Producers(producerName CHAR, producerId CHAR PRIMARY KEY)
+```
 I did convert the relationships into tables to minimize rendundancy, this is because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables.
 
 ## SQL Queries
