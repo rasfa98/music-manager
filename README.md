@@ -1,14 +1,12 @@
 # Music Manager
 
-## Problem
+# Tasks
+
+## 1. Idea
 
 If you are a passionate music collector that has been collecting for a long time, you may have trouble remembering which albums you have in your collection. This applications aims to solve that problem!
 
-## Main Users
-
 The main users are people collecting music as a hobby or just anyone that would like to organize and have an easy overview of their albums. The application will have a simple UI that anyone will be able to use.
-
-## Features
 
 - Add albums
 - Edit albums
@@ -18,7 +16,7 @@ The main users are people collecting music as a hobby or just anyone that would 
 - Search for albums
 - Sort albums
 
-## Logical Model
+## 2. Logical model
 
 ![Logical model](/diagrams/logical-model.png)
 
@@ -28,7 +26,7 @@ The reason for not including the producer and track attribues in the entity set 
 
 The relationship between **Albums** and **Tracks** is _many-many_ since an album can include any number of tracks and a specific track can be present on multiple albums (collection of best songs etc.). Between **Albums** and **Producers** the relation is also _many-many_ since a producer can produce many albums and a album can have multiple producers.
 
-## SQL Design
+## 3. Design in SQL
 
 ```sql
 Albums(label CHAR, device CHAR, genre CHAR, albumTitle TEXT, band CHAR, year INT(4), albumId CHAR PRIMARY KEY)
@@ -43,7 +41,7 @@ Producers(producerName CHAR, producerId CHAR PRIMARY KEY)
 ```
 I did convert the relationships into tables to minimize rendundancy, this is because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables.
 
-## SQL Queries
+## 4. SQL queries
 
 **Search albums by title or band**
 
@@ -128,3 +126,11 @@ WHERE Albums.albumId = 'x'
 ```
 
 This query will be used to get the details about a specific album. It will be used when viewing an album as well as editing an existing one. This is a multirelational query that uses all tables in the database to combine the data from **Albums**, **Tracks** and **Producers**. I'm using the aggregate function _GROUP_CONCAT_ to join columns with the same name which makes it possible to return all data in a single query. All producers, track names and lengths are concatenated into strings. I'm also adding some aggregate functions in order to return the number of tracks together with the length of the album. The reason for getting all data in a single query, was to remove the use of a transaction. It also makes the code a bit cleaner.
+
+## 5. Implementation
+
+Link to source code: https://github.com/rasfa98/music-manager
+
+## 6. Supplemental video
+
+Link to video: 
