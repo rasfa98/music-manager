@@ -36,3 +36,7 @@ app.use('/edit', require('./routes/edit'));
 app.use('/delete', require('./routes/delete'));
 app.use('/manage', require('./routes/manage'));
 app.use('/search', require('./routes/search'));
+
+app.use((req, res) => {
+  res.render('404');
+});
