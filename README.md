@@ -8,6 +8,8 @@ If you are a passionate music collector that has been collecting for a long time
 
 The main users are people collecting music as a hobby or just anyone that would like to organize and have an easy overview of their albums. The application will have a simple UI that anyone will be able to use.
 
+The application will have the following features:
+
 - Add albums
 - Edit albums
 - List albums
