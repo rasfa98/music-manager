@@ -1,7 +1,5 @@
 # Music Manager
 
-_Rasmus Falk, WP17_
-
 ## 1. Idea
 
 If you are a passionate music collector that has been collecting for a long time, you may have trouble remembering which albums you have in your collection. This application aims to solve that problem!
@@ -31,15 +29,31 @@ The relationship between **Albums** and **Tracks** is _many-many_ since an album
 ## 3. Design in SQL
 
 ```sql
-Albums(label CHAR, device CHAR, genre CHAR, albumTitle TEXT, band CHAR, year INT(4), albumId CHAR PRIMARY KEY)
+Albums(
+    label CHAR,
+    device CHAR,
+    genre CHAR,
+    albumTitle TEXT,
+    band CHAR,
+    year INT(4),
+    albumId CHAR PRIMARY KEY)
 
-ProducedBy(albumId CHAR, producerId CHAR PRIMARY KEY)
+ProducedBy(
+    albumId CHAR,
+    producerId CHAR PRIMARY KEY)
 
-MadeOf(albumId CHAR, trackId CHAR PRIMARY KEY)
+MadeOf(
+    albumId CHAR,
+    trackId CHAR PRIMARY KEY)
 
-Tracks(trackName TEXT, trackLength INT, trackId CHAR PRIMARY KEY)
+Tracks(
+    trackName TEXT,
+    trackLength INT,
+    trackId CHAR PRIMARY KEY)
 
-Producers(producerName CHAR, producerId CHAR PRIMARY KEY)
+Producers(
+    producerName CHAR,
+    producerId CHAR PRIMARY KEY)
 ```
 
 I converted the relationships into tables to minimize rendundancy and to remove anomalies, this is because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables. Every table has a primary key, which will be the album/track or producer ID. For almost every column the type is _CHAR_, the reason for this is that this type has a max length of 20 characters which I found to be enough. This removes the need for constraints regarding the length. The year has a length constraint of 4 numbers since that's the format that is required. For the other fileds where _CHAR_ is not enough, the _TEXT_ type is used instead.
@@ -133,27 +147,23 @@ This query will be used to get the details about a specific album. It will be us
 
 Link to source code: https://github.com/rasfa98/music-manager
 
-## 6. Supplemental video
+If you want to run the application you need to clone the project and create file in the root directory called **.env** with the following structure:
 
-Link to video: https://www.youtube.com/watch?v=90DmQrYNl0E
-
-## Run the application
-
-### Prerequisites
-
-A file in the root directory called **.env** with the following structure:
-
-```
+```bash
 PORT=8080
 DB_NAME=music-manager
 SESSION_SECRET=XXXX
 ```
 
-**NOTE: A database file with albums is included, however this file should be added to the .gitignore file to prevent future data from being pushed to GitHub!**
-
-### Start the application
+Then do the following to start the application
 
 1. Open your terminal and go to the root directory of the project
 2. Install the required packages `$ npm install`
 3. Start the application `$ npm start`
 4. The application should now run on http://localhost:8080
+
+## 6. Supplemental video
+
+Link to video: https://www.youtube.com/watch?v=90DmQrYNl0E
+
+_Rasmus Falk, WP17_
