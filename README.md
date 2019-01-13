@@ -22,11 +22,11 @@ The application will have the following features:
 
 ![Logical model](/diagrams/logical-model.png)
 
-Since a track cannot be found using only the given attributes I gave it an ID just to avoid using weak entity sets. This is also the case for the producer.
+Since an album cannot be found using only the given attributes I gave it an ID just to avoid using weak entity sets. This is also the case for the tracks and producers.
 
-The reason for not including the producer and track attribues in the entity set **Albums** was to minimize redundancy. If we have multiple producers for an album the tuple would be duplicated and the only difference would be the producer. The same problem occures if the track attributes were included. I reasoned that an album can only have a single band, genre and label so that's why they are included in the entity set. I found it okay to duplicate the tuples if the same album exists on multiple devices since I think it's required.
+The reason for not including the producer and track attribues in the entity set **Albums** was to minimize redundancy. If we have multiple producers for an album the tuple would be duplicated and the only difference would be the producer. The same problem occures if the track attributes were included. I reasoned that an album can only have a single title, band, genre, year and label so that's why they are included in the entity set. I found it okay to duplicate the tuples if the same album exists on multiple devices since I think it's required.
 
-The relationship between **Albums** and **Tracks** is _many-many_ since an album can include any number of tracks and a specific track can be present on multiple albums (collection of best songs etc.). Between **Albums** and **Producers** the relation is also _many-many_ since a producer can produce many albums and a album can have multiple producers.
+The relationship between **Albums** and **Tracks** is _many-many_ since an album can include any number of tracks and a specific track can be present on multiple albums (collection of best songs etc.). Between **Albums** and **Producers** the relation is also _many-many_ since a producer can produce many albums and an album can have multiple producers.
 
 ## 3. Design in SQL
 
@@ -41,6 +41,7 @@ Tracks(trackName TEXT, trackLength INT, trackId CHAR PRIMARY KEY)
 
 Producers(producerName CHAR, producerId CHAR PRIMARY KEY)
 ```
+
 I did convert the relationships into tables to minimize rendundancy, this is because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables.
 
 ## 4. SQL queries
@@ -88,19 +89,18 @@ ORDER BY COUNT(MadeOf.trackId) DESC
 
 This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by the number of tracks in descending order. I'm grouping the results by id and using the aggregate function _COUNT_ to calculate the number of tracks.
 
-**Sort albums by most fewest tracks**
+**Remove all producers of an album**
 
 ```sql
-SELECT Albums.albumId,
-       albumTitle,
-       band
-FROM Albums
-INNER JOIN MadeOf ON MadeOf.albumId = Albums.albumId
-GROUP BY Albums.albumId
-ORDER BY COUNT(MadeOf.trackId)
+DELETE
+FROM Producers
+WHERE producerId IN
+    (SELECT producerId
+     FROM ProducedBy
+     WHERE albumId = 'x')
 ```
 
-This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by the number of tracks in ascending order. I'm grouping the results by id and using the aggregate function _COUNT_ to calculate the number of tracks.
+This query will be used when removing an album. This will remove all producers that are connected to a specific album. The reason for using a WHERE clause instead of _INNER JOIN_ was because joins are not supported in **SQLite** delete statements.
 
 **Get all information about a speific album**
 
@@ -135,4 +135,25 @@ Link to source code: https://github.com/rasfa98/music-manager
 
 ## 6. Supplemental video
 
-Link to video: 
+Link to video: https://www.youtube.com/watch?v=90DmQrYNl0E
+
+# Run the application
+
+## Prerequisites
+
+A file in the root directory called **.env** with the following structure:
+
+```
+PORT=8080
+DB_NAME=music-manager
+SESSION_SECRET=XXXX
+```
+
+**NOTE: A DATABASE FILE WITH ALBUMS IS INCLUDED HOWEVER THIS SHOULD BE ADDED TO THE .GITIGNORE FILE!**
+
+## Start the application
+
+1. Open your terminal and go to the root directory of the project
+2. Install the required packages `$ npm install`
+3. Start the application `$ npm start`
+4. The application should now run on http://localhost:8080
