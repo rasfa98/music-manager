@@ -56,7 +56,7 @@ Producers(
     producerId CHAR PRIMARY KEY)
 ```
 
-I converted the relationships into tables to minimize rendundancy and to remove anomalies, this is because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables. Every table has a primary key, which will be the album/track or producer ID. For almost every column the type is _CHAR_, the reason for this is that this type has a max length of 20 characters which I found to be enough. This removes the need for constraints regarding the length. The year has a length constraint of 4 numbers since that's the format that is required. For the other fileds where _CHAR_ is not enough, the _TEXT_ type is used instead.
+I converted the relationships into tables to minimize rendundancy and to remove anomalies, this is because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables. Every table has a primary key, which will be the album/track or producer ID. For almost every column the type is _CHAR_, the reason for this is that this type has a max length of 20 characters which I found to be enough. This removes the need for constraints regarding the length. The year has a length constraint of 4 numbers since that's the format that is required. For the other fields where _CHAR_ is not enough, the _TEXT_ type is used instead.
 
 ## 4. SQL queries
 
@@ -116,7 +116,7 @@ WHERE producerId IN
 
 This query will be used when removing an album. This will remove all producers that are connected to a specific album. The reason for using a WHERE clause instead of _INNER JOIN_ was because joins are not supported in **SQLite** delete statements.
 
-**Get all information about a speific album**
+**Get all information about a specific album**
 
 ```sql
 SELECT Albums.albumId,
@@ -141,13 +141,13 @@ WHERE Albums.albumId = 'x'
   AND MadeOf.albumId = 'x'
 ```
 
-This query will be used to get the details about a specific album. It will be used when viewing an album as well as editing an existing one. This is a multirelational query that uses all tables in the database to combine the data from **Albums**, **Tracks** and **Producers**. I'm using the aggregate function _GROUP_CONCAT_ to join columns with the same name which makes it possible to return all data in a single query. All producers, track names and lengths are concatenated into strings. I'm also adding some aggregate functions in order to return the number of tracks together with the length of the album. The reason for getting all data in a single query, was to remove the use of a transaction. It also makes the code a bit cleaner.
+This query will be used to get the details about a specific album. It will be used when viewing an album as well as editing an existing one. This is a multirelational query that uses all tables in the database to combine the data from **Albums**, **Tracks** and **Producers**. I'm using the aggregate function _GROUP_CONCAT_ to join columns with the same name which makes it possible to return all data in a single query. All producers, track names and lengths are concatenated into strings. I'm also adding some aggregate functions in order to return the number of tracks together with the length of the album.
 
 ## 5. Implementation
 
 Link to source code: https://github.com/rasfa98/music-manager
 
-If you want to run the application you need to clone the project and create file in the root directory called **.env** with the following structure:
+If you want to run the application you need to clone the project and create a file in the root directory called **.env** with the following structure:
 
 ```bash
 PORT=8080
