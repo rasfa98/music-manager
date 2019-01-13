@@ -1,12 +1,12 @@
 # Music Manager
 
-# Tasks
+_Rasmus Falk, WP17_
 
 ## 1. Idea
 
-If you are a passionate music collector that has been collecting for a long time, you may have trouble remembering which albums you have in your collection. This applications aims to solve that problem!
+If you are a passionate music collector that has been collecting for a long time, you may have trouble remembering which albums you have in your collection. This application aims to solve that problem!
 
-The main users are people collecting music as a hobby or just anyone that would like to organize and have an easy overview of their albums. The application will have a simple UI that anyone will be able to use.
+The main users are people collecting music as a hobby or just anyone that would like to organize and have an easy overview of their albums. The application will have a simple UI that anyone will be able to use. With a search feature and sort functionality, users will be able to quickly find specific albums.
 
 The application will have the following features:
 
@@ -20,7 +20,7 @@ The application will have the following features:
 
 ## 2. Logical model
 
-![Logical model](/diagrams/logical-model.png)
+![Logical model](https://raw.githubusercontent.com/rasfa98/music-manager/master/diagrams/logical-model.png)
 
 Since an album cannot be found using only the given attributes I gave it an ID just to avoid using weak entity sets. This is also the case for the tracks and producers.
 
@@ -42,7 +42,7 @@ Tracks(trackName TEXT, trackLength INT, trackId CHAR PRIMARY KEY)
 Producers(producerName CHAR, producerId CHAR PRIMARY KEY)
 ```
 
-I did convert the relationships into tables to minimize rendundancy, this is because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables.
+I converted the relationships into tables to minimize rendundancy and to remove anomalies, this is because the relationships are _many-many_. I renamed some of the attributes in order to make it easier to understand when joining tables. Every table has a primary key, which will be the album/track or producer ID. For almost every column the type is _CHAR_, the reason for this is that this type has a max length of 20 characters which I found to be enough. This removes the need for constraints regarding the length. The year has a length constraint of 4 numbers since that's the format that is required. For the other fileds where _CHAR_ is not enough, the _TEXT_ type is used instead.
 
 ## 4. SQL queries
 
@@ -73,7 +73,7 @@ GROUP BY Albums.albumId
 ORDER BY SUM(trackLength) DESC
 ```
 
-This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by length in descending order. I'm grouping the results by id and using the aggregate function _SUM_ to calculate the length of an album by adding the length of all tracks that contains the album id.
+This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by length in descending order. I'm grouping the results by ID and using the aggregate function _SUM_ to calculate the length of an album, by adding the length of all tracks.
 
 **Sort albums by most tracks**
 
@@ -87,7 +87,7 @@ GROUP BY Albums.albumId
 ORDER BY COUNT(MadeOf.trackId) DESC
 ```
 
-This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by the number of tracks in descending order. I'm grouping the results by id and using the aggregate function _COUNT_ to calculate the number of tracks.
+This query will be used when sorting the added albums on the index page. This is a multirelational query that orders the albums by the number of tracks in descending order. I'm grouping the results by ID and using the aggregate function _COUNT_ to calculate the number of tracks.
 
 **Remove all producers of an album**
 
@@ -137,9 +137,9 @@ Link to source code: https://github.com/rasfa98/music-manager
 
 Link to video: https://www.youtube.com/watch?v=90DmQrYNl0E
 
-# Run the application
+## Run the application
 
-## Prerequisites
+### Prerequisites
 
 A file in the root directory called **.env** with the following structure:
 
@@ -149,9 +149,9 @@ DB_NAME=music-manager
 SESSION_SECRET=XXXX
 ```
 
-**NOTE: A DATABASE FILE WITH ALBUMS IS INCLUDED HOWEVER THIS SHOULD BE ADDED TO THE .GITIGNORE FILE!**
+**NOTE: A database file with albums is included, however this file should be added to the .gitignore file to prevent future data from being pushed to GitHub!**
 
-## Start the application
+### Start the application
 
 1. Open your terminal and go to the root directory of the project
 2. Install the required packages `$ npm install`
